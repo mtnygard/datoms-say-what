@@ -1,0 +1,7 @@
+#! /bin/bash
+if [ -x `which rlwrap` ] ; then
+   CMD="rlwrap java"
+else
+   CMD="java"
+fi
+${CMD} -cp `cat .classpath` clojure.main
