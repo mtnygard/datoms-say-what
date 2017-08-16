@@ -27,8 +27,9 @@
                                    ::long :bigint ::bigint :float ::float :double ::double
                                    :bigdec ::bigdec :ref ::ref :instant ::instant
                                    :uuid ::uuid :uri ::uri :bytes ::bytes))
+(s/def ::added              boolean?)
 
-(s/def ::datoms-in          (s/+ (s/tuple ::entity-id ::attribute-id ::value ::transaction-id boolean?)))
+(s/def ::datoms-in          (s/+ (s/tuple ::entity-id ::attribute-id ::value ::transaction-id ::added)))
 
 (s/def ::asserted-value     ::value)
 (s/def ::retracted-value    ::value)
