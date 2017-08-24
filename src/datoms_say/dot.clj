@@ -1,4 +1,4 @@
-(ns datoms-say-what.dot
+(ns datoms-say.dot
   (:require [clojure.spec.alpha :as s]
             [clojure.string :as str]))
 

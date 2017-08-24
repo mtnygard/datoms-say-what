@@ -3,6 +3,8 @@
   :url           "http://github.com/mtnygard/datoms-say-what"
   :license       {:name "Eclipse Public License"
                   :url  "http://www.eclipse.org/legal/epl-v10.html"}
+  :repositories {"my.datomic.com" {:url   "https://my.datomic.com/repo"
+                                   :creds :gpg}}
   :dependencies  [[org.clojure/clojure "1.9.0-alpha17"]
                   [com.datomic/datomic-pro "0.9.5561.54" :scope "provided"]
                   [viz-cljc "0.1.3"]]

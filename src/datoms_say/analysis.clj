@@ -1,7 +1,7 @@
-(ns datoms-say-what.analysis
+(ns datoms-say.analysis
   (:require [datomic.api :as d]
             [clojure.spec.alpha :as s]
-            [datoms-say-what.spec :as spec])
+            [datoms-say.spec :as spec])
     (:import datomic.db.Db))
 
 (defn partition-ident
@@ -68,7 +68,8 @@
 
 (defn analyze-tx
   [db-before db-after tx-data]
-  (let [eids-touched (distinct (map :e tx-data))]
+  (let [eids-touched (distinct (filter #(not= 0 %) (map :e tx-data)))]
+    (println (distinct (map :e tx-data)))
     (map
      #(analyze-changes
        db-before db-after

@@ -1,4 +1,4 @@
-(ns datoms-say-what.spec
+(ns datoms-say.spec
   (:require [clojure.spec.alpha :as s]))
 
 (def byte-array-class (type (byte-array 0)))

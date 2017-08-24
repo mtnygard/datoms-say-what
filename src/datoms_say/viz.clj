@@ -1,7 +1,7 @@
-(ns datoms-say-what.viz
-  (:require [datoms-say-what.render :as r]
-            [datoms-say-what.dot :as dot]
-            [datoms-say-what.spec :as spec]
+(ns datoms-say.viz
+  (:require [datoms-say.render :as r]
+            [datoms-say.dot :as dot]
+            [datoms-say.spec :as spec]
             [viz.core :as viz]
             [clojure.spec.alpha :as s]))
 
@@ -47,8 +47,10 @@
 (defn visualize-tx
   [analyzed-data]
   (viz/image
-   (dot/graph->dot
-    (transform analyzed-data))))
+   (doto
+       (dot/graph->dot
+        (transform analyzed-data))
+     (println))))
 
 (s/fdef visualize-tx
         :args (s/cat :analyzed-data ::spec/analyzed)
