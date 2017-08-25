@@ -26,7 +26,9 @@ Here's an example from a comment block in `src/datoms_say.clj`:
 
 That produces this image:
 
-![sample](doc/sample.svg)
+![sample](./doc/sample.png)
+
+(This is a PNG because GitHub won't render SVG in Markdown. XSS risk.)
 
 ## License
 
