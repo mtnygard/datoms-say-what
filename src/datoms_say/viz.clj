@@ -109,25 +109,22 @@
         :args (s/cat :analyzed ::spec/analyzed)
         :ret  ::spec/graph)
 
-(comment
-
-)
-
 (def ^:private graph-defaults
   {:name       "Transaction Effects"
    :attributes (str "rankdir=LR; node [shape=none, style=\"rounded,filled\", fillcolor=\"" (:fill colors) "\"];")})
 
+(defn dotify-tx
+  [analyzed-data]
+  (doto (dot/graph->dot
+         (merge
+          graph-defaults
+          (transform analyzed-data)))
+    (println)))
+
 (defn visualize-tx
   [analyzed-data]
-  (viz/image
-   (doto (dot/graph->dot
-          (merge
-           graph-defaults
-           (transform analyzed-data)))
-     (println))))
+  (viz/image (dotify-tx analyzed-data)))
 
 (s/fdef visualize-tx
         :args (s/cat :analyzed-data ::spec/analyzed)
         :ret  string?)
-
-(spit "sample.svg" (viz/image (clojure.string/replace (slurp "sample.dot") #"\r\n" "\n")))
