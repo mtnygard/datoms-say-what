@@ -1,4 +1,4 @@
-(defproject mtnygard/datoms-say-what "1.0.0"
+(defproject mtnygard/datoms-say-what "1.0.1-SNAPSHOT"
   :description   "Visualize the results of a Datomic transaction"
   :url           "http://github.com/mtnygard/datoms-say-what"
   :license       {:name "Eclipse Public License"
