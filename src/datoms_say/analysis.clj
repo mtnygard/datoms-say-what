@@ -19,7 +19,9 @@
       :ident       ident
       :value-type  (:db/valueType a)
       :cardinality card
-      :value       (get e-after ident)}
+      :value       (get e-after ident)
+      :many?       (= :db.cardinality/many card)
+      :ref?        (= :db.type/ref (:db/valueType e-after))}
      (when (= :db.cardinality/many card)
        {:before-set (get (d/entity db-before eid) ident)
         :after-set  (get e-after ident)}))))
@@ -64,18 +66,40 @@
 
 (defn- analyze-changes
   [db-before db-after entity tx-data]
-  (update entity :attributes merge-changes db-before db-after entity tx-data))
+  (update entity :attributes merge-changes db-before db-after entity (filter #(= (:entity-id entity) (:e %)) tx-data)))
+
+(defn- zero-entity?
+  [datom]
+  (= 0 (:e datom)))
+
+(defn- reference?
+  [attr]
+  (= :db.type/ref (:db/valueType attr)))
+
+(defn- many?
+  [attr]
+  (= :db.cardinality/many (:db/cardinality attr)))
+
+(defn- references
+  [db-after tx-data]
+  (keep identity (map
+                  (fn [datom]
+                    (when (reference? (d/entity db-after (:a datom)))
+                      [[(:e datom) (:a datom)] (:v datom)]))
+                  (remove zero-entity? tx-data))))
 
 (defn analyze-tx
   [db-before db-after tx-data]
-  (let [eids-touched (distinct (filter #(not= 0 %) (map :e tx-data)))]
-    (println (distinct (map :e tx-data)))
-    (map
-     #(analyze-changes
-       db-before db-after
-       (analyze-entity db-before db-after %)
-       tx-data)
-     eids-touched)))
+  (let [eids-touched      (distinct (filter #(not= 0 %) (map :e tx-data)))
+        references        (references db-after tx-data)
+        analyzed-entities (map
+                           #(analyze-changes
+                             db-before db-after
+                             (analyze-entity db-before db-after %)
+                             tx-data)
+                           eids-touched)]
+    {:entities   analyzed-entities
+     :references references}))
 
 (s/fdef analyze-tx
         :args (s/cat :db-before #(instance? Db %) :db-after #(instance? Db %) :tx-data ::spec/datoms)

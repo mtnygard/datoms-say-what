@@ -30,6 +30,11 @@
 
 (s/def ::datoms-in          (s/+ (s/tuple ::entity-id ::attribute-id ::value ::transaction-id ::added)))
 
+(s/def ::referrer           (s/tuple ::entity-id ::attribute-id))
+(s/def ::referent           ::entity-id)
+(s/def ::reference          (s/tuple ::referrer ::referent))
+(s/def ::references         (s/* ::reference))
+
 (s/def ::asserted-value     ::value)
 (s/def ::retracted-value    ::value)
 (s/def ::singlevalue-change (s/keys :opt-un [::asserted-value ::retracted-value]))
@@ -45,7 +50,7 @@
 (s/def ::partition          ::keyword)
 (s/def ::entity             (s/keys :req-un [::entity-id ::attributes] :opt-un [::partition]))
 (s/def ::entities           (s/* ::entity))
-(s/def ::analyzed           (s/keys :req-un [::entities]))
+(s/def ::analyzed           (s/keys :req-un [::entities ::references]))
 
 (s/def ::nodes              (s/coll-of (s/cat :label string? :text (s/? string?))))
 (s/def ::edges              (s/coll-of (s/cat :from string? :to string?)))

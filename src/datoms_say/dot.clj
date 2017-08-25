@@ -3,12 +3,12 @@
             [clojure.string :as str]))
 
 (defn graph->dot
-  [{:keys [nodes edges]}]
+  [{:keys [nodes edges attributes name] :or {name "G" attributes ""}}]
+  (def n* nodes)
   (str/join
    (flatten
-    ["digraph G {"
-     "rankdir=LR;"
-     "node [shape=Mrecord, style=\"rounded,filled\", fillcolor=\"#FAF0E6\"];"
+    ["digraph \"" name "\" {"
+     attributes
 
      (map
       (fn [[id text]]

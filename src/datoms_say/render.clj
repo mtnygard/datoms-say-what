@@ -74,14 +74,15 @@
     xs
     "</TABLE>"]))
 
-(defn- row
-  [as xs]
+(defn row
+  [_ xs]
+  ;; Graphviz doesn't allow TR to have attributes
   (as-str
-   ["<TR " (attributes as) ">"
+   ["<TR>"
     xs
     "</TR>"]))
 
-(defn- cell
+(defn cell
   [as xs]
   (as-str
    ["<TD " (attributes as) ">"
