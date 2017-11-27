@@ -30,6 +30,11 @@ That produces this image:
 
 (This is a PNG because GitHub won't render SVG in Markdown. XSS risk.)
 
+This is what it looks like when there are retractions and changes in a
+transaction:
+
+![sample2](./doc/sample2.png)
+
 ## License
 
 Copyright © 2017 Michael Nygard

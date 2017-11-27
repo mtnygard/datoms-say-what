@@ -27,37 +27,37 @@
 (extend-protocol RenderAtom
   Object
   (render-atom [this]
-    (println "render-atom Object                " this)
+;    (println "render-atom Object                " this)
     (str this))
 
   clojure.lang.IPersistentSet
   (render-atom [this]
-    (println "render-atom IPersistentSet        " this)
+;    (println "render-atom IPersistentSet        " this)
     (delimited lset this rset))
 
   clojure.lang.IPersistentVector
   (render-atom [this]
-    (println "render-atom IPersistentVector     " this)
+;    (println "render-atom IPersistentVector     " this)
     (delimited lvec this rvec))
 
   clojure.lang.IPersistentMap
   (render-atom [this]
-    (println "render-atom IPersistentMap        " this)
+;    (println "render-atom IPersistentMap        " this)
     (delimited lmap this rmap))
 
   clojure.lang.MapEntry
   (render-atom [this]
-    (println "render-atom MapEntry              " this)
+;    (println "render-atom MapEntry              " this)
     (str (key this) " " (val this)))
 
   datomic.db.DbId
   (render-atom [this]
-    (println "render-atom DbId                  " this)
+;    (println "render-atom DbId                  " this)
     (str pound "db/id[" (.part this) " " (.idx this) "]"))
 
   datomic.query.EntityMap
   (render-atom [this]
-    (println "render-atom EntityMap             " this)
+;    (println "render-atom EntityMap             " this)
     (render-atom (:db/id this))))
 
 (defprotocol Render
@@ -95,7 +95,7 @@
 
   Object
   (render [this level]
-    (println "render      Object                " this " in scope " level)
+;    (println "render      Object                " this " in scope " level)
     (case level
       nil    (render-atom this)
       :table (row nil (cell (meta this) (render-atom this)))
@@ -104,7 +104,7 @@
 
   clojure.lang.IPersistentCollection
   (render [this level]
-    (println "render      IPersistentCollection " this " in scope " level)
+;    (println "render      IPersistentCollection " this " in scope " level)
     (case level
       nil    (table (meta this) (map #(render % :table) this))
       :table (row   (meta this) (map #(render % :row)   this))
@@ -113,7 +113,7 @@
 
   clojure.lang.MapEntry
   (render [this level]
-    (println "render      MapEntry              " this " in scope " level)
+;    (println "render      MapEntry              " this " in scope " level)
     (case level
       nil    (str   (render (key this) nil) " "
                     (render (val this) nil))

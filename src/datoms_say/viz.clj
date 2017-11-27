@@ -42,12 +42,12 @@
 (deftype Attribute [ident entity-id value asserted-value retracted-value before-set after-set]
   r/RenderAtom
   (render-atom [this]
-    (println "render-atom Attribute             " this)
+;    (println "render-atom Attribute             " this)
     (str ident))
 
   r/Render
   (render [this level]
-    (println "render      Attribute             " this " in scope " level  "--> before-set " before-set)
+;    (println "render      Attribute             " this " in scope " level  "--> before-set " before-set)
     (when (= :table level)
       (r/row {}
              [(r/cell {} (r/render-atom ident))
@@ -73,7 +73,7 @@
 
   r/RenderAtom
   (render-atom [this]
-    (println "render-atom Eid                   " this)
+;    (println "render-atom Eid                   " this)
     (str "<B>" entity-id "</B><BR/>" partition)))
 
 (defn- transform-entity
@@ -94,7 +94,7 @@
 
 (defn- dot-edge
   [e]
-  (println "dot-edge " e)
+;  (println "dot-edge " e)
   (let [[[from-eid from-attr] to-eid] e]
     [(str from-eid ":" from-attr) (str to-eid ":id")]))
 
